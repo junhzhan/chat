@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="libs/commons-codec-1.9.jar"/>
+	<classpathentry kind="lib" path="libs/commons-logging-1.2.jar"/>
+	<classpathentry kind="lib" path="libs/aliyun-sdk-oss-2.0.7.jar"/>
+	<classpathentry kind="lib" path="libs/hamcrest-core-1.1.jar"/>
+	<classpathentry kind="lib" path="libs/httpclient-4.4.jar"/>
+	<classpathentry kind="lib" path="libs/httpcore-4.4.jar"/>
+	<classpathentry kind="lib" path="libs/jdom-1.1.jar"/>
+	<classpathentry kind="lib" path="libs/netty-all-4.0.32.Final.jar"/>
+	<classpathentry kind="lib" path="libs/json-20131018.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
