@@ -7,6 +7,7 @@
 <body>
     <script type="text/javascript">
         var socket;
+        var isCode = true;
         if (!window.WebSocket) {
             window.WebSocket = window.MozWebSocket;
         }
@@ -33,10 +34,20 @@
                 return;
             }
             if (socket.readyState == WebSocket.OPEN) {
-                var msg = {'action': 3000, 'msg': {'type':'CODE', 'content':message}};
+                var msg = {'action': 3000, 'msg': {'type': isCode ? 'CODE' : 'STRING', 'content':message}};
                 socket.send(JSON.stringify(msg));
             } else {
                 alert("连接没有开启.");
+            }
+        }
+
+        function switchMode() {
+            if (isCode) {
+                isCode = false;
+                document.getElementById('switch').value= 'text';
+            } else {
+                isCode = true;
+                document.getElementById('switch').value= 'code';
             }
         }
     </script>
@@ -47,6 +58,7 @@
         <input type="text" name="message"  style="width: 300px" value="Welcome to www.waylau.com">
         <input type="button" value="发送消息" onclick="send(this.form.message.value)">
         <input type="button" onclick="javascript:document.getElementById('responseText').value=''" value="清空聊天记录">
+        <input id="switch" type="button" value="code" onclick="switchMode()">
     </form>
     <br> 
     <br> 
