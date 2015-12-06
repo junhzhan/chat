@@ -3,10 +3,10 @@ package io.netty.example.chat.core;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class MessageCreator {
+public class MessageParser {
     
-    private static final String ACTION_KEY = "action";
-    private static final String MESSAGE_KEY = "msg";
+    public static final String ACTION_KEY = "action";
+    public static final String MESSAGE_KEY = "msg";
     public static Message parseMessage(String rawMessage) {
         Message result = null;
         try {

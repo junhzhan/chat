@@ -7,6 +7,9 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
+import io.netty.example.chat.core.Message;
+import io.netty.example.chat.core.MessageDispatcher;
+import io.netty.example.chat.core.MessageParser;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import io.netty.util.concurrent.GlobalEventExecutor;
 
@@ -25,9 +28,10 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<String> {
             }
         }
         
-        for (Channel channel : TextWebSocketFrameHandler.sChannels) {
-            channel.writeAndFlush(new TextWebSocketFrame("[" + incoming.remoteAddress() + "]" + msg));
-        }
+        System.out.println("receive user message");
+        System.out.println(msg);
+        Message message = MessageParser.parseMessage(msg);
+        MessageDispatcher.getInst().dispatchMessage(message);
     }
 
     @Override

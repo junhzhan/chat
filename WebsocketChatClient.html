@@ -33,7 +33,8 @@
                 return;
             }
             if (socket.readyState == WebSocket.OPEN) {
-                socket.send(message);
+                var msg = {'action': 3000, 'msg': {'type':'CODE', 'content':message}};
+                socket.send(JSON.stringify(msg));
             } else {
                 alert("连接没有开启.");
             }
