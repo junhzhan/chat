@@ -33,13 +33,13 @@ public class TextWebSocketFrameHandler extends SimpleChannelInboundHandler<TextW
     protected void channelRead0(ChannelHandlerContext ctx,
             final TextWebSocketFrame msg) throws Exception {
         Channel incoming = ctx.channel();
-        for (Channel channel : sChannels) {
-            if (channel != incoming) {
-                channel.writeAndFlush(new TextWebSocketFrame("[" + incoming.remoteAddress() + "]" + msg.text()));
-            } else {
-                channel.writeAndFlush(new TextWebSocketFrame("[you]" + msg.text()));
-            }
-        }
+//        for (Channel channel : sChannels) {
+//            if (channel != incoming) {
+//                channel.writeAndFlush(new TextWebSocketFrame("[" + incoming.remoteAddress() + "]" + msg.text()));
+//            } else {
+//                channel.writeAndFlush(new TextWebSocketFrame("[you]" + msg.text()));
+//            }
+//        }
         
         final String msgContent = msg.text();
         System.out.println("receive cs message");

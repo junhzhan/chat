@@ -22,7 +22,7 @@ public class CSSendMsgProcessor extends MessageProcessor {
 
     
     private static final String MESSAGE_TYPE_CODE = "CODE";
-    private static final String MESSAGE_TYPE_STRING = "STRING";
+    private static final String MESSAGE_TYPE_STRING = "TEXT";
     
     private static final String MSG_TYPE_KEY = "type";
     private static final String MSG_CONTENT_KEY = "content";
@@ -60,6 +60,7 @@ public class CSSendMsgProcessor extends MessageProcessor {
         JSONObject msg = new JSONObject();
         msg.put(SEND_MSG_TYPE_KEY, MESSAGE_TYPE_STRING);
         msg.put(SEND_MSG_CONTENT_KEY, messageContent);
+        notification.put(MessageParser.MESSAGE_KEY, msg);
         return notification.toString();
     }
     

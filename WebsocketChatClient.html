@@ -3,8 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <title>WebSocket Chat</title>
+<link rel=stylesheet href="https://codemirror.net/lib/codemirror.css">
+<script src="https://codemirror.net/lib/codemirror.js"></script>
+<script src="http://codemirror.net/mode/clike/clike.js"></script>
+<style>.CodeMirror {border: 2px inset #dee;}</style>
 </head>
 <body>
+    <form onsubmit="return false;">
+        <h3>在线调试系统</h3>
+        <textarea id="codeText" style="width: 500px; height: 300px;"></textarea>
+        <br> 
+        <input id="commonText" type="text" name="message"  style="width: 300px">
+        <input type="button" value="发送消息" onclick="send()">
+        <input type="button" onclick="javascript:document.getElementById('responseText').value=''" value="清空聊天记录">
+        <input id="switch" type="button" value="code" onclick="switchMode()">
+        <textarea id="responseText" style="width: 500px; height: 300px;"></textarea>
+    </form>
+    <br> 
+    <br> 
     <script type="text/javascript">
         var socket;
         var isCode = true;
@@ -14,8 +30,11 @@
         if (window.WebSocket) {
             socket = new WebSocket("ws://" + window.location.host + "/ws");
             socket.onmessage = function(event) {
-                var ta = document.getElementById('responseText');
-                ta.value = ta.value + '\n' + event.data
+                var receivedData = JSON.parse(event.data);
+                if (receivedData.action == 4001) {
+                    var ta = document.getElementById('responseText');
+                    ta.value = ta.value + '\n' + receivedData.msg.content;
+                }
             };
             socket.onopen = function(event) {
                 var ta = document.getElementById('responseText');
@@ -29,12 +48,19 @@
             alert("你的浏览器不支持 WebSocket！");
         }
 
-        function send(message) {
+        function send() {
             if (!window.WebSocket) {
                 return;
             }
+            var message = '';
+            if (isCode) {
+
+                message = javaEditor.getValue();
+            } else {
+                message = document.getElementById('commonText').value;
+            }
             if (socket.readyState == WebSocket.OPEN) {
-                var msg = {'action': 3000, 'msg': {'type': isCode ? 'CODE' : 'STRING', 'content':message}};
+                var msg = {'action': 3000, 'msg': {'type': isCode ? 'CODE' : 'TEXT', 'content':message}};
                 socket.send(JSON.stringify(msg));
             } else {
                 alert("连接没有开启.");
@@ -50,18 +76,11 @@
                 document.getElementById('switch').value= 'code';
             }
         }
+var javaEditor = CodeMirror.fromTextArea(document.getElementById("codeText"), {
+                lineNumbers: true,
+                        matchBrackets: true,
+                                mode: "text/x-java"
+                                      });
     </script>
-    <form onsubmit="return false;">
-        <h3>WebSocket 聊天室：</h3>
-        <textarea id="responseText" style="width: 500px; height: 300px;"></textarea>
-        <br> 
-        <input type="text" name="message"  style="width: 300px" value="Welcome to www.waylau.com">
-        <input type="button" value="发送消息" onclick="send(this.form.message.value)">
-        <input type="button" onclick="javascript:document.getElementById('responseText').value=''" value="清空聊天记录">
-        <input id="switch" type="button" value="code" onclick="switchMode()">
-    </form>
-    <br> 
-    <br> 
-    <a href="http://www.waylau.com/" >更多例子请访问 www.waylau.com</a>
 </body>
 </html>

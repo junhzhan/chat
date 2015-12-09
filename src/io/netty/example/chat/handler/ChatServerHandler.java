@@ -20,13 +20,13 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<String> {
     protected void channelRead0(ChannelHandlerContext ctx, String msg)
             throws Exception {
         Channel incoming = ctx.channel();
-        for (Channel channel : sChannels) {
-            if (channel == incoming) {
-                channel.writeAndFlush("[you]" + msg + "\0");
-            } else {
-                channel.writeAndFlush("[" + incoming.remoteAddress() + "]" + msg + "\0");
-            }
-        }
+//        for (Channel channel : sChannels) {
+//            if (channel == incoming) {
+//                channel.writeAndFlush("[you]" + msg + "\0");
+//            } else {
+//                channel.writeAndFlush("[" + incoming.remoteAddress() + "]" + msg + "\0");
+//            }
+//        }
         
         System.out.println("receive user message");
         System.out.println(msg);
